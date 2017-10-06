@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<buildpath>
+	<buildpathentry kind="src" path="longevo/app"/>
+	<buildpathentry kind="src" path="longevo/src/AppBundle"/>
+	<buildpathentry kind="src" path="longevo/tests/AppBundle/Controller"/>
+	<buildpathentry kind="src" path="longevo/var"/>
+	<buildpathentry kind="src" path="longevo/vendor"/>
+	<buildpathentry kind="src" path="longevo/web"/>
+	<buildpathentry kind="con" path="org.eclipse.php.core.LANGUAGE"/>
+</buildpath>

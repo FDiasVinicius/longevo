@@ -1,0 +1,539 @@
+--
+-- PostgreSQL database dump
+--
+
+SET statement_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+
+--
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+SET search_path = public, pg_catalog;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- Name: chamado; Type: TABLE; Schema: public; Owner: longevo; Tablespace: 
+--
+
+CREATE TABLE chamado (
+    id integer NOT NULL,
+    titulo character varying(100) NOT NULL,
+    descricao text,
+    data_criacao timestamp without time zone,
+    status integer
+);
+
+
+ALTER TABLE public.chamado OWNER TO longevo;
+
+--
+-- Name: chamados_id_seq; Type: SEQUENCE; Schema: public; Owner: longevo
+--
+
+CREATE SEQUENCE chamados_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.chamados_id_seq OWNER TO longevo;
+
+--
+-- Name: chamados_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: longevo
+--
+
+ALTER SEQUENCE chamados_id_seq OWNED BY chamado.id;
+
+
+--
+-- Name: cliente; Type: TABLE; Schema: public; Owner: longevo; Tablespace: 
+--
+
+CREATE TABLE cliente (
+    id integer NOT NULL,
+    nome character varying(55) NOT NULL,
+    email character varying(55) NOT NULL
+);
+
+
+ALTER TABLE public.cliente OWNER TO longevo;
+
+--
+-- Name: cliente_id_seq; Type: SEQUENCE; Schema: public; Owner: longevo
+--
+
+CREATE SEQUENCE cliente_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.cliente_id_seq OWNER TO longevo;
+
+--
+-- Name: cliente_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: longevo
+--
+
+ALTER SEQUENCE cliente_id_seq OWNED BY cliente.id;
+
+
+--
+-- Name: pedido; Type: TABLE; Schema: public; Owner: longevo; Tablespace: 
+--
+
+CREATE TABLE pedido (
+    id integer NOT NULL,
+    data_criacao timestamp without time zone DEFAULT now(),
+    status integer DEFAULT 1
+);
+
+
+ALTER TABLE public.pedido OWNER TO longevo;
+
+--
+-- Name: pedidos_id_seq; Type: SEQUENCE; Schema: public; Owner: longevo
+--
+
+CREATE SEQUENCE pedidos_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.pedidos_id_seq OWNER TO longevo;
+
+--
+-- Name: pedidos_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: longevo
+--
+
+ALTER SEQUENCE pedidos_id_seq OWNED BY pedido.id;
+
+
+--
+-- Name: rel_cliente_pedido; Type: TABLE; Schema: public; Owner: longevo; Tablespace: 
+--
+
+CREATE TABLE rel_cliente_pedido (
+    id_cliente integer NOT NULL,
+    id_pedido integer NOT NULL,
+    id integer NOT NULL
+);
+
+
+ALTER TABLE public.rel_cliente_pedido OWNER TO longevo;
+
+--
+-- Name: rel_cliente_pedido_id_cliente_seq; Type: SEQUENCE; Schema: public; Owner: longevo
+--
+
+CREATE SEQUENCE rel_cliente_pedido_id_cliente_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.rel_cliente_pedido_id_cliente_seq OWNER TO longevo;
+
+--
+-- Name: rel_cliente_pedido_id_cliente_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: longevo
+--
+
+ALTER SEQUENCE rel_cliente_pedido_id_cliente_seq OWNED BY rel_cliente_pedido.id_cliente;
+
+
+--
+-- Name: rel_cliente_pedido_id_pedido_seq; Type: SEQUENCE; Schema: public; Owner: longevo
+--
+
+CREATE SEQUENCE rel_cliente_pedido_id_pedido_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.rel_cliente_pedido_id_pedido_seq OWNER TO longevo;
+
+--
+-- Name: rel_cliente_pedido_id_pedido_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: longevo
+--
+
+ALTER SEQUENCE rel_cliente_pedido_id_pedido_seq OWNED BY rel_cliente_pedido.id_pedido;
+
+
+--
+-- Name: rel_cliente_pedido_id_seq; Type: SEQUENCE; Schema: public; Owner: longevo
+--
+
+CREATE SEQUENCE rel_cliente_pedido_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.rel_cliente_pedido_id_seq OWNER TO longevo;
+
+--
+-- Name: rel_cliente_pedido_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: longevo
+--
+
+ALTER SEQUENCE rel_cliente_pedido_id_seq OWNED BY rel_cliente_pedido.id;
+
+
+--
+-- Name: rel_pedido_chamado; Type: TABLE; Schema: public; Owner: longevo; Tablespace: 
+--
+
+CREATE TABLE rel_pedido_chamado (
+    id_pedido integer NOT NULL,
+    id_chamado integer NOT NULL,
+    id integer NOT NULL
+);
+
+
+ALTER TABLE public.rel_pedido_chamado OWNER TO longevo;
+
+--
+-- Name: rel_pedido_chamado_id_chamado_seq; Type: SEQUENCE; Schema: public; Owner: longevo
+--
+
+CREATE SEQUENCE rel_pedido_chamado_id_chamado_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.rel_pedido_chamado_id_chamado_seq OWNER TO longevo;
+
+--
+-- Name: rel_pedido_chamado_id_chamado_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: longevo
+--
+
+ALTER SEQUENCE rel_pedido_chamado_id_chamado_seq OWNED BY rel_pedido_chamado.id_chamado;
+
+
+--
+-- Name: rel_pedido_chamado_id_pedido_seq; Type: SEQUENCE; Schema: public; Owner: longevo
+--
+
+CREATE SEQUENCE rel_pedido_chamado_id_pedido_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.rel_pedido_chamado_id_pedido_seq OWNER TO longevo;
+
+--
+-- Name: rel_pedido_chamado_id_pedido_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: longevo
+--
+
+ALTER SEQUENCE rel_pedido_chamado_id_pedido_seq OWNED BY rel_pedido_chamado.id_pedido;
+
+
+--
+-- Name: rel_pedido_chamado_id_seq; Type: SEQUENCE; Schema: public; Owner: longevo
+--
+
+CREATE SEQUENCE rel_pedido_chamado_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.rel_pedido_chamado_id_seq OWNER TO longevo;
+
+--
+-- Name: rel_pedido_chamado_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: longevo
+--
+
+ALTER SEQUENCE rel_pedido_chamado_id_seq OWNED BY rel_pedido_chamado.id;
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: longevo
+--
+
+ALTER TABLE ONLY chamado ALTER COLUMN id SET DEFAULT nextval('chamados_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: longevo
+--
+
+ALTER TABLE ONLY cliente ALTER COLUMN id SET DEFAULT nextval('cliente_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: longevo
+--
+
+ALTER TABLE ONLY pedido ALTER COLUMN id SET DEFAULT nextval('pedidos_id_seq'::regclass);
+
+
+--
+-- Name: id_cliente; Type: DEFAULT; Schema: public; Owner: longevo
+--
+
+ALTER TABLE ONLY rel_cliente_pedido ALTER COLUMN id_cliente SET DEFAULT nextval('rel_cliente_pedido_id_cliente_seq'::regclass);
+
+
+--
+-- Name: id_pedido; Type: DEFAULT; Schema: public; Owner: longevo
+--
+
+ALTER TABLE ONLY rel_cliente_pedido ALTER COLUMN id_pedido SET DEFAULT nextval('rel_cliente_pedido_id_pedido_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: longevo
+--
+
+ALTER TABLE ONLY rel_cliente_pedido ALTER COLUMN id SET DEFAULT nextval('rel_cliente_pedido_id_seq'::regclass);
+
+
+--
+-- Name: id_pedido; Type: DEFAULT; Schema: public; Owner: longevo
+--
+
+ALTER TABLE ONLY rel_pedido_chamado ALTER COLUMN id_pedido SET DEFAULT nextval('rel_pedido_chamado_id_pedido_seq'::regclass);
+
+
+--
+-- Name: id_chamado; Type: DEFAULT; Schema: public; Owner: longevo
+--
+
+ALTER TABLE ONLY rel_pedido_chamado ALTER COLUMN id_chamado SET DEFAULT nextval('rel_pedido_chamado_id_chamado_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: longevo
+--
+
+ALTER TABLE ONLY rel_pedido_chamado ALTER COLUMN id SET DEFAULT nextval('rel_pedido_chamado_id_seq'::regclass);
+
+
+--
+-- Data for Name: chamado; Type: TABLE DATA; Schema: public; Owner: longevo
+--
+
+COPY chamado (id, titulo, descricao, data_criacao, status) FROM stdin;
+\.
+
+
+--
+-- Name: chamados_id_seq; Type: SEQUENCE SET; Schema: public; Owner: longevo
+--
+
+SELECT pg_catalog.setval('chamados_id_seq', 1, false);
+
+
+--
+-- Data for Name: cliente; Type: TABLE DATA; Schema: public; Owner: longevo
+--
+
+COPY cliente (id, nome, email) FROM stdin;
+1	teste	teste@teste
+\.
+
+
+--
+-- Name: cliente_id_seq; Type: SEQUENCE SET; Schema: public; Owner: longevo
+--
+
+SELECT pg_catalog.setval('cliente_id_seq', 1, true);
+
+
+--
+-- Data for Name: pedido; Type: TABLE DATA; Schema: public; Owner: longevo
+--
+
+COPY pedido (id, data_criacao, status) FROM stdin;
+\.
+
+
+--
+-- Name: pedidos_id_seq; Type: SEQUENCE SET; Schema: public; Owner: longevo
+--
+
+SELECT pg_catalog.setval('pedidos_id_seq', 1, true);
+
+
+--
+-- Data for Name: rel_cliente_pedido; Type: TABLE DATA; Schema: public; Owner: longevo
+--
+
+COPY rel_cliente_pedido (id_cliente, id_pedido, id) FROM stdin;
+\.
+
+
+--
+-- Name: rel_cliente_pedido_id_cliente_seq; Type: SEQUENCE SET; Schema: public; Owner: longevo
+--
+
+SELECT pg_catalog.setval('rel_cliente_pedido_id_cliente_seq', 1, false);
+
+
+--
+-- Name: rel_cliente_pedido_id_pedido_seq; Type: SEQUENCE SET; Schema: public; Owner: longevo
+--
+
+SELECT pg_catalog.setval('rel_cliente_pedido_id_pedido_seq', 1, false);
+
+
+--
+-- Name: rel_cliente_pedido_id_seq; Type: SEQUENCE SET; Schema: public; Owner: longevo
+--
+
+SELECT pg_catalog.setval('rel_cliente_pedido_id_seq', 1, false);
+
+
+--
+-- Data for Name: rel_pedido_chamado; Type: TABLE DATA; Schema: public; Owner: longevo
+--
+
+COPY rel_pedido_chamado (id_pedido, id_chamado, id) FROM stdin;
+\.
+
+
+--
+-- Name: rel_pedido_chamado_id_chamado_seq; Type: SEQUENCE SET; Schema: public; Owner: longevo
+--
+
+SELECT pg_catalog.setval('rel_pedido_chamado_id_chamado_seq', 1, false);
+
+
+--
+-- Name: rel_pedido_chamado_id_pedido_seq; Type: SEQUENCE SET; Schema: public; Owner: longevo
+--
+
+SELECT pg_catalog.setval('rel_pedido_chamado_id_pedido_seq', 1, false);
+
+
+--
+-- Name: rel_pedido_chamado_id_seq; Type: SEQUENCE SET; Schema: public; Owner: longevo
+--
+
+SELECT pg_catalog.setval('rel_pedido_chamado_id_seq', 1, false);
+
+
+--
+-- Name: chamados_pkey; Type: CONSTRAINT; Schema: public; Owner: longevo; Tablespace: 
+--
+
+ALTER TABLE ONLY chamado
+    ADD CONSTRAINT chamados_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: cliente_pkey; Type: CONSTRAINT; Schema: public; Owner: longevo; Tablespace: 
+--
+
+ALTER TABLE ONLY cliente
+    ADD CONSTRAINT cliente_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: pedidos_pkey; Type: CONSTRAINT; Schema: public; Owner: longevo; Tablespace: 
+--
+
+ALTER TABLE ONLY pedido
+    ADD CONSTRAINT pedidos_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: rel_cliente_pedido_pkey; Type: CONSTRAINT; Schema: public; Owner: longevo; Tablespace: 
+--
+
+ALTER TABLE ONLY rel_cliente_pedido
+    ADD CONSTRAINT rel_cliente_pedido_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: rel_pedido_chamado_pkey; Type: CONSTRAINT; Schema: public; Owner: longevo; Tablespace: 
+--
+
+ALTER TABLE ONLY rel_pedido_chamado
+    ADD CONSTRAINT rel_pedido_chamado_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: rel_cliente_pedido_id_cliente_fkey; Type: FK CONSTRAINT; Schema: public; Owner: longevo
+--
+
+ALTER TABLE ONLY rel_cliente_pedido
+    ADD CONSTRAINT rel_cliente_pedido_id_cliente_fkey FOREIGN KEY (id_cliente) REFERENCES cliente(id) ON DELETE CASCADE;
+
+
+--
+-- Name: rel_cliente_pedido_id_pedido_fkey; Type: FK CONSTRAINT; Schema: public; Owner: longevo
+--
+
+ALTER TABLE ONLY rel_cliente_pedido
+    ADD CONSTRAINT rel_cliente_pedido_id_pedido_fkey FOREIGN KEY (id_pedido) REFERENCES pedido(id) ON DELETE CASCADE;
+
+
+--
+-- Name: rel_pedido_chamado_id_chamado_fkey; Type: FK CONSTRAINT; Schema: public; Owner: longevo
+--
+
+ALTER TABLE ONLY rel_pedido_chamado
+    ADD CONSTRAINT rel_pedido_chamado_id_chamado_fkey FOREIGN KEY (id_chamado) REFERENCES chamado(id) ON DELETE CASCADE;
+
+
+--
+-- Name: rel_pedido_chamado_id_pedido_fkey; Type: FK CONSTRAINT; Schema: public; Owner: longevo
+--
+
+ALTER TABLE ONLY rel_pedido_chamado
+    ADD CONSTRAINT rel_pedido_chamado_id_pedido_fkey FOREIGN KEY (id_pedido) REFERENCES pedido(id) ON DELETE CASCADE;
+
+
+--
+-- Name: public; Type: ACL; Schema: -; Owner: postgres
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM postgres;
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+--
+-- PostgreSQL database dump complete
+--
+

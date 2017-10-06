@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>{% block title %}{{ title | default("SAC") }}{% endblock %}</title>
+        <link rel="stylesheet" href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}"/>
+        <link rel="stylesheet" href="{{ asset('vendor/bootstrap/css/bootstrap-theme.min.css') }}"/>
+        {% block stylesheets %}{% endblock %}
+    </head>
+    <body>
+    	{% include "menu.superior.html.twig" %}
+        {% block body %}
+        
+        {% endblock %}
+        
+        <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
+        <script src="{{ asset('vendor/bootstrap/js/bootstrap.min.js') }}"></script>
+        {% block javascripts %}
+        
+        {% endblock %}
+    </body>
+</html>
