@@ -1,0 +1,20 @@
+<div class="container">            
+  <table class="table">
+    <thead>
+      <tr>
+      	{% for th in header %}
+      		<th>{{ th }}</th>
+      	{% endfor %}
+      </tr>
+    </thead>
+    <tbody>
+      {% for tr in body %}
+          <tr>
+            {% for td in tr %}
+          		<th>{{ td }}</th>
+          	{% endfor %}
+          </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>

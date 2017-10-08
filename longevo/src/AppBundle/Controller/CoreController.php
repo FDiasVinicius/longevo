@@ -15,7 +15,7 @@ class CoreController extends Controller
     {
         // replace this example code with whatever you need
         return $this->render('home.html.twig', [
-            'title' => "SAC"
+            'title' => "SAC", "menu" => ["current"=>"home"]
         ]);
     }
 }

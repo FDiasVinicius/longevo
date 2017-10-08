@@ -1,0 +1,29 @@
+<div class="container">            
+	{% if filtro is defined %}
+    	<form class="navbar-form navbar-right" method="POST" action="{{ filtro.action }}">
+            <div class="form-group"> 
+	        {% for f in filtro.fields %}
+            	<input class="form-control" name="{{ f.name }}" value="{{ f.value }}" placeholder="{{ f.placeholder|default("Buscar...") }}"> 
+            {% endfor %}
+            	<button type="submit" class="btn btn-default">
+            		<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+           		</button>
+            </div>
+        </form>
+	{% endif %}
+	
+	{% if btns is defined %}
+    	<div class="btn-toolbar" role="toolbar">
+    		{% for btn in btns %}
+    			<button type="button" onClick="{{ btn.callback }}" class="btn btn-{{ btn.classe|default("default") }}">
+    				{% if btn.icon is defined %}
+    					<span class="glyphicon glyphicon-{{ btn.icon }}" aria-hidden="true"></span> {{ btn.txt }}
+    				{% else %}
+    					{{ btn.txt }}
+    				{% endif %}
+    			</button>
+    		{% endfor %}
+		</div>
+	{% endif %}
+	
+</div>

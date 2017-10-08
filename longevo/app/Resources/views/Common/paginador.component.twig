@@ -1,0 +1,22 @@
+<div class="container-fluid" style="text-align: center;">
+    <nav aria-label="Navegação">
+      <ul class="pagination">
+        <li>
+          <a href="#" aria-label="Anterior" {{ paginaAtual == 1 ? "disabled":"active" }}>
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>
+        {% for i in 1..nPaginas %}
+        	<li {{ paginaAtual == i ? "class=\"active\"":"" }}>
+        		<a href="{{ action }}/{{ i }}">{{ i }}</a>
+        	</li>
+        {% endfor %}
+        
+        <li>
+          <a href="#" aria-label="Proxima" {{ paginaAtual == nPaginas ? "disabled":"active" }}>
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+</div>

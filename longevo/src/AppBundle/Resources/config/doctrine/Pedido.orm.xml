@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
   <entity name="AppBundle\Entity\Pedido" table="pedido">
+    <indexes>
+      <index name="IDX_C4EC16CE2A813255" columns="id_cliente"/>
+    </indexes>
     <id name="id" type="integer" column="id">
       <generator strategy="SEQUENCE"/>
       <sequence-generator sequence-name="pedido_id_seq" allocation-size="1" initial-value="1"/>
@@ -16,5 +19,10 @@
         <option name="default">1</option>
       </options>
     </field>
+    <many-to-one field="idCliente" target-entity="Cliente" fetch="LAZY">
+      <join-columns>
+        <join-column name="id_cliente" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
   </entity>
 </doctrine-mapping>

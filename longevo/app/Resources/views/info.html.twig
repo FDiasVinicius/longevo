@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	<div class="alert alert-{{ classe|default('info') }}" style="width: 95%;margin: auto;" role="alert">
+		{{ msg|raw }}
+	</div>
+	{% if back is defined %}
+	{% include 'Common/bottombar.component.twig' %}
+	{% endif %}
+{% endblock %}
+
+{% block javascripts %}
+	{% if redirect is defined %}
+		<script>
+            setTimeout(function(){
+            	location.href="{{redirect}}";
+            }, 2000);
+		</script>
+	{% endif %}
+{% endblock %}

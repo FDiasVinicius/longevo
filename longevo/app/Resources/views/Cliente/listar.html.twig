@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	{% include 'Common/topbar.component.twig' with topBar %}
+	{% include 'Common/relatorio.component.twig' with table %}
+{% endblock %}
+
+{% block javascripts %}
+	<script src="{{ asset("js/cliente.js") }}"></script>
+{% endblock %}
