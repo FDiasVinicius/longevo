@@ -65,6 +65,6 @@ chown -r www-data:www-data /var/longevo
 </VirtualHost>
 ```
 
-Estou disponibilizando tambem uma box do vagrant com todo o ambiente configurado. O arquivo longevo.box.
+Estou disponibilizando tambem uma box do vagrant com todo o ambiente configurado. O arquivo [longevo.box](https://github.com/viniciusNyx/longevo.box).
 
 Qualquer duvida me envie um email.
