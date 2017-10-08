@@ -21,13 +21,13 @@ class ChamadoController extends Controller
     const PAGINACAO_LIMITE_PAGINA = 5;
     
     /**
-     * @Route("/chamado/{page}", name="chamados", requirements={"page": "\d+"}, defaults={"page" = 1}))
+     * @Route("/chamado/{page}", name="chamados", requirements={"page": "\d+"}, defaults={"page" = 1})
      */
     public function ListarAction(Request $request, $page)
     {
         $page = isset($page)?$page:1;
         $filtroPedido = $request->request->has('pedido')?intval($request->request->get('pedido')):null;
-        $filtroEmail = $request->request->has('email')?$request->request->get('email'):null;
+        $filtroEmail = $request->request->has('email')?htmlspecialchars($request->request->get('email')):null;
         
         $hasFiltro = (!is_null($filtroEmail) || !is_null($filtroPedido));
         
@@ -35,22 +35,27 @@ class ChamadoController extends Controller
         $qb->select('chamado')->innerJoin(Cliente::class, 'cliente', Join::WITH, 'chamado.idCliente = cliente.id');
         
         if ($hasFiltro) {
-            if (is_null($filtroPedido)) {
-                $filtroPedido = 0;
+            if (is_null($filtroPedido) || $filtroPedido <=0) {
+                $filtroPedido = "";
             }
             if (empty($filtroEmail)) {
                 $filtroEmail = "";
             }
             
-            $qb->where(
-                $qb->expr()->orX(
-                    $qb->expr()->eq('cliente.email', ':email'),
-                    $qb->expr()->eq('chamado.idPedido', ':idPedido')
-                )
-            )->setParameter('email', $filtroEmail)->setParameter('idPedido', $filtroPedido);
+            if (!empty($filtroEmail) && !empty($filtroPedido)){
+                $qb->where('cliente.email = :email')->setParameter('email', $filtroEmail)
+                ->andWhere('chamado.idPedido = :idPedido')->setParameter('idPedido', $filtroPedido);
+            } else if (!empty($filtroEmail)){
+                $qb->where('cliente.email = :email')->setParameter('email', $filtroEmail);
+            }else if (!empty($filtroPedido)) {
+                $qb->where('chamado.idPedido = :idPedido')->setParameter('idPedido', $filtroPedido);
+            }
+            
         }
         
-        $qb->orderBy('cliente.nome', 'ASC')->setFirstResult($page)->setMaxResults(self::PAGINACAO_LIMITE_PAGINA);
+        $qb->orderBy('cliente.nome', 'ASC')
+        ->setFirstResult(($page-1)*self::PAGINACAO_LIMITE_PAGINA)
+        ->setMaxResults(self::PAGINACAO_LIMITE_PAGINA);
         
         $query = $qb->getQuery();
         
@@ -90,16 +95,16 @@ class ChamadoController extends Controller
         
         $filtros = [
             "fields" =>[
-                ['name' => 'email', 'placeholder' => 'E-mail', 'value' => ""],
-                ['name' => 'pedido', 'placeholder' => 'Pedido', 'value' => ""]
-            ],
-            "action" => "/chamado"
+                ['name' => 'email', 'placeholder' => 'E-mail', 'value' => $filtroEmail],
+                ['name' => 'pedido', 'placeholder' => 'Pedido', 'value' => $filtroPedido]
+            ]
         ];
         
         $topbar = ["btns"=>$btns, 'filtro' => $filtros];
         
+        $nPaginas = ceil($registros/self::PAGINACAO_LIMITE_PAGINA);
         $paginacao = [
-            "nPaginas" => ceil($registros/self::PAGINACAO_LIMITE_PAGINA), 
+            "nPaginas" => ($nPaginas==0?1:$nPaginas),
             "paginaAtual" => $page, 
             "action" => "/chamado"
         ];
@@ -120,7 +125,7 @@ class ChamadoController extends Controller
     {
         return $this->render('Chamado/cadastro.html.twig', [
             'title' => "SAC - Novo Chamado",
-            "menu" => ["current"=>"chamads"]
+            "menu" => ["current"=>"chamados"]
         ]);
     }
     
@@ -131,7 +136,6 @@ class ChamadoController extends Controller
     public function SalvarAction(Request $request)
     {
         $safeForm = ChamadoHelper::getFormCadastro($request);
-        
         $doctrine = $this->getDoctrine();
         $manager = $this->getDoctrine()->getManager();
         $clienteRepo = $doctrine->getRepository(Cliente::class);
@@ -168,8 +172,7 @@ class ChamadoController extends Controller
         $chamado->setIdCliente($cliente);
         $chamado->setDescricao($safeForm['descricao']);
         $chamado->setIdPedido($pedido);
-        $chamado->setDataCriacao(new \DateTime(strtotime("NOW")) );
-        
+        $chamado->setDataCriacao(new \DateTime() );;
         $manager->persist($chamado);
         $manager->flush();
         

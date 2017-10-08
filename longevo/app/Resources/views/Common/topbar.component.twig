@@ -1,6 +1,6 @@
 <div class="container">            
 	{% if filtro is defined %}
-    	<form class="navbar-form navbar-right" method="POST" action="{{ filtro.action }}">
+    	<form id="filtro" class="navbar-form navbar-right" method="POST" action="{{ filtro.action }}">
             <div class="form-group"> 
 	        {% for f in filtro.fields %}
             	<input class="form-control" name="{{ f.name }}" value="{{ f.value }}" placeholder="{{ f.placeholder|default("Buscar...") }}"> 

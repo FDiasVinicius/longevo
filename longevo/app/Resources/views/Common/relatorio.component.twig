@@ -1,4 +1,4 @@
-<div class="container">            
+<div class="container" id="relatorioContainer">            
   <table class="table">
     <thead>
       <tr>
@@ -11,7 +11,7 @@
       {% for tr in body %}
           <tr>
             {% for td in tr %}
-          		<th>{{ td }}</th>
+          		<td>{{ td|raw }}</td>
           	{% endfor %}
           </tr>
       {% endfor %}

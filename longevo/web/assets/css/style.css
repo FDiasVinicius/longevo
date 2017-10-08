@@ -1,0 +1,21 @@
+body{
+	position:absolute;
+	width: 100%;
+	height: 100%;
+}
+
+.bg-icon{
+	background-image: url('/assets/img/list-clipboard.png');
+	width: 100px;
+    height: 100px;
+    background-size: 100px;
+    position: absolute;
+    width: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    margin-top: 10%;
+}
+
+#relatorioContainer{
+	min-height: 250px;
+}

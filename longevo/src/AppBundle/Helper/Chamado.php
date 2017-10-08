@@ -30,11 +30,11 @@ class Chamado
     {
         switch($status) {
             case self::STATUS_PENDENTE:
-                return "Pendente";
+                return "<span class=\"label label-warning\">Pendente</span>";
             case self::STATUS_RESOLVIDO:
-                return "Resolvido";
+                return "<span class=\"label label-success\">Resolvido</span>";
             case self::STATUS_CANCELADO:
-                return "Cancelado";
+                return "<span class=\"label label-default\">Cancelado</span>";
         }
     }
     

@@ -33,13 +33,13 @@ class Pedido
     {
         switch($status) {
             case self::STATUS_PENDENTE:
-                return "Pendente";
+                return "<span class=\"label label-warning\">Pendente</span>";
             case self::STATUS_PROCESSANDO:
-                return "Processando";
+                return "<span class=\"label label-primary\">Processando</span>";
             case self::STATUS_ENTREGUE:
-                return "Entregue";
+                return "<span class=\"label label-success\">Entregue</span>";
             case self::STATUS_ATRASADO:
-                return "Atrasado";
+                return "<span class=\"label label-danger\">Atrasado</span>";
         }
     }
 }

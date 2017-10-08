@@ -1,19 +1,25 @@
 <div class="container-fluid" style="text-align: center;">
     <nav aria-label="Navegação">
       <ul class="pagination">
-        <li>
-          <a href="#" aria-label="Anterior" {{ paginaAtual == 1 ? "disabled":"active" }}>
+        <li class="{{ (paginaAtual == 1 ? "disabled":"") }}">
+          <a {% if paginaAtual > 1 %}
+          	onClick="paginador({{ paginaAtual-1 }})"
+          	{% endif %} 
+          	aria-label="Anterior">
             <span aria-hidden="true">&laquo;</span>
           </a>
         </li>
         {% for i in 1..nPaginas %}
         	<li {{ paginaAtual == i ? "class=\"active\"":"" }}>
-        		<a href="{{ action }}/{{ i }}">{{ i }}</a>
+        		<a onClick="paginador({{ i }})">{{ i }}</a>
         	</li>
         {% endfor %}
         
-        <li>
-          <a href="#" aria-label="Proxima" {{ paginaAtual == nPaginas ? "disabled":"active" }}>
+        <li class="{{ (paginaAtual == nPaginas ? "disabled":"") }}">
+          <a {% if paginaAtual < nPaginas %} 
+          	onClick="paginador({{ paginaAtual+1 }})"
+          	{% endif %} 
+          	aria-label="Proxima">
             <span aria-hidden="true">&raquo;</span>
           </a>
         </li>

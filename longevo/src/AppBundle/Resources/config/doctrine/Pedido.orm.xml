@@ -6,7 +6,7 @@
     </indexes>
     <id name="id" type="integer" column="id">
       <generator strategy="SEQUENCE"/>
-      <sequence-generator sequence-name="pedido_id_seq" allocation-size="1" initial-value="1"/>
+      <sequence-generator sequence-name="pedidos_id_seq" allocation-size="1" initial-value="1"/>
     </id>
     <field name="dataCriacao" type="datetime" column="data_criacao" nullable="true">
       <options>

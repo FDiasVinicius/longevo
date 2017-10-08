@@ -10,22 +10,41 @@ use AppBundle\Entity\Cliente;
 use Doctrine\ORM\EntityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use AppBundle\Helper\Cliente as ClienteHelper;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 
 class ClienteController extends Controller
 {
+    const PAGINACAO_LIMITE_PAGINA = 5;
+    
     /**
-     * @Route("/cliente", name="clientes")
+     * @Route("/cliente/{page}", name="clientes", requirements={"page": "\d+"}, defaults={"page" = 1})
      */
-    public function ListarAction(Request $request)
+    public function ListarAction(Request $request, $page)
     {
-        $clienteRepo = $this->getDoctrine()->getRepository(Cliente::class);
+        $page = isset($page)?$page:1;
+        $filtroEmail = $request->request->has('email')?htmlspecialchars($request->request->get('email')):null;
         
-        $clientes = $clienteRepo->findBy([], ["nome" => "asc"]);
+        $qb = $this->getDoctrine()->getRepository(Cliente::class)->createQueryBuilder('cliente');
+        $qb->select('cliente');
+        
+        if (!empty($filtroEmail)) {
+            $qb->where('cliente.email = :email')->setParameter('email', $filtroEmail);
+        }
+        
+        $qb->orderBy('cliente.nome', 'ASC')
+        ->setFirstResult(($page-1)*self::PAGINACAO_LIMITE_PAGINA)
+        ->setMaxResults(self::PAGINACAO_LIMITE_PAGINA);
+        
+        $query = $qb->getQuery();
+        
+        $pagination = new Paginator($query, $fetchJoinCollection = true);
         
         $relHeader = ["Código", "Nome", "E-mail"];
         $relBody = [];
         
-        foreach ($clientes as $cliente) {
+        $registros = count($pagination);
+        
+        foreach ($pagination as $cliente) {
             $relBody[] = [
                 $cliente->getId(),
                 $cliente->getNome(),
@@ -43,13 +62,29 @@ class ClienteController extends Controller
             ]
         ];
         
-        $topbar = ["btns"=>$btns];
+        $filtros = [
+            "fields" =>[
+                ['name' => 'email', 'placeholder' => 'E-mail', 'value' => $filtroEmail]
+            ]
+        ];
+        
+        $topbar = ["btns"=>$btns, 'filtro' => $filtros];
+        
+        $topbar = ["btns"=>$btns, "filtro" => $filtros];
+        
+        $nPaginas = ceil($registros/self::PAGINACAO_LIMITE_PAGINA);
+        $paginacao = [
+            "nPaginas" => ($nPaginas==0?1:$nPaginas),
+            "paginaAtual" => $page,
+            "action" => "/cliente"
+        ];
         
         return $this->render('Cliente/listar.html.twig', [
             'title' => "SAC - Clientes", 
             "menu" => ["current"=>"clientes"],
             "table" => ["header" => $relHeader, "body" => $relBody],
-            "topBar" => $topbar
+            "topBar" => $topbar,
+            "paginacao" => $paginacao
         ]);
     }
     
