@@ -65,6 +65,14 @@ chown -r www-data:www-data /var/longevo
 </VirtualHost>
 ```
 
-Estou disponibilizando tambem uma box do vagrant com todo o ambiente configurado. O arquivo [longevo.box](https://github.com/viniciusNyx/longevo.box).
+Estou disponibilizando tambem uma box do vagrant com todo o ambiente configurado. O arquivo [longevo.box](https://drive.google.com/file/d/0B9wgAoJqgzGeQnFSOVlGWk1SN3c/view?usp=sharing).
+É uma box do CentOS para vagrant do tipo virtual box
+segue o VagrantFile dela:
+´´´
+Vagrant.configure("2") do |config|
+  config.vm.box = "centos/7"
+  config.vm.network :forwarded_port, guest: 80, host: 4567
+end
+´´´
 
 Qualquer duvida me envie um email.
