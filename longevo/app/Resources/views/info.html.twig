@@ -2,7 +2,7 @@
 
 {% block body %}
 	<div class="alert alert-{{ classe|default('info') }}" style="width: 95%;margin: auto;" role="alert">
-		{{ msg|raw }}
+		{{msg|raw}}
 	</div>
 	{% if back is defined %}
 	    {% include 'Common/bottombar.component.twig' %}

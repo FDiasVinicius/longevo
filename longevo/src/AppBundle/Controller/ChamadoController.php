@@ -53,7 +53,7 @@ class ChamadoController extends Controller
             
         }
         
-        $qb->orderBy('cliente.nome', 'ASC')
+        $qb->orderBy('chamado.dataCriacao', 'DESC')
         ->setFirstResult(($page-1)*self::PAGINACAO_LIMITE_PAGINA)
         ->setMaxResults(self::PAGINACAO_LIMITE_PAGINA);
         
@@ -97,7 +97,8 @@ class ChamadoController extends Controller
             "fields" =>[
                 ['name' => 'email', 'placeholder' => 'E-mail', 'value' => $filtroEmail],
                 ['name' => 'pedido', 'placeholder' => 'Pedido', 'value' => $filtroPedido]
-            ]
+            ],
+            "action" => "/chamado"
         ];
         
         $topbar = ["btns"=>$btns, 'filtro' => $filtros];
@@ -125,7 +126,8 @@ class ChamadoController extends Controller
     {
         return $this->render('Chamado/cadastro.html.twig', [
             'title' => "SAC - Novo Chamado",
-            "menu" => ["current"=>"chamados"]
+            "menu" => ["current"=>"chamados"],
+            "backBtn" => "location.href='/chamado'"
         ]);
     }
     

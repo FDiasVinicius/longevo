@@ -71,7 +71,8 @@ class PedidoController extends Controller
         $filtros = [
             "fields" =>[
                 ['name' => 'email', 'placeholder' => 'E-mail', 'value' => $filtroEmail]
-            ]
+            ],
+            "action" => "/pedido"
         ];
         
         $topbar = ["btns"=>$btns, "filtro" => $filtros];
@@ -80,7 +81,7 @@ class PedidoController extends Controller
         $paginacao = [
             "nPaginas" => ($nPaginas==0?1:$nPaginas),
             "paginaAtual" => $page,
-            "action" => "/chamado"
+            "action" => "/pedido"
         ];
         
         return $this->render('Pedido/listar.html.twig', [
@@ -109,7 +110,8 @@ class PedidoController extends Controller
         return $this->render('Pedido/cadastro.html.twig', [
             'title' => "SAC - Novo Pedido",
             "menu" => ["current"=>"pedidos"],
-            "clientes" => $select
+            "clientes" => $select,
+            "backBtn" => "location.href='/pedido'"
         ]);
     }
     

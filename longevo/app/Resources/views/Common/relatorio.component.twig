@@ -3,7 +3,7 @@
     <thead>
       <tr>
       	{% for th in header %}
-      		<th>{{ th }}</th>
+      		<th>{{th}}</th>
       	{% endfor %}
       </tr>
     </thead>
@@ -11,7 +11,7 @@
       {% for tr in body %}
           <tr>
             {% for td in tr %}
-          		<td>{{ td|raw }}</td>
+          		<td>{{td|raw}}</td>
           	{% endfor %}
           </tr>
       {% endfor %}

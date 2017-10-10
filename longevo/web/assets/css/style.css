@@ -19,3 +19,14 @@ body{
 #relatorioContainer{
 	min-height: 250px;
 }
+
+.paginador li:not(.disabled){
+	cursor: pointer;
+}
+
+.bottombar{
+	bottom: 0px;
+    position: fixed;
+    width: 100%;
+    border-top: solid 1px #e7e7e7;
+}

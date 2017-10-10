@@ -4,13 +4,13 @@
       	<a href="/" class="navbar-brand">SAC</a> </div>
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
          <ul class="nav navbar-nav">
-            <li {{ menu.current == "clientes"?'class="active"':'' }}>
+            <li {{menu.current=="clientes"?'class="active"':''}}>
             	<a href="/cliente">Clientes</a>
             </li>
-            <li {{ menu.current == "pedidos"?'class="active"':'' }}>
+            <li {{menu.current=="pedidos"?'class="active"':''}}>
             	<a href="/pedido">Pedidos</a>
             </li>
-            <li {{ menu.current == "chamados"?'class="active"':'' }}>
+            <li {{menu.current=="chamados"?'class="active"':''}}>
             	<a href="/chamado">Chamados</a>
             </li>
          </ul>

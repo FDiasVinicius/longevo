@@ -65,7 +65,8 @@ class ClienteController extends Controller
         $filtros = [
             "fields" =>[
                 ['name' => 'email', 'placeholder' => 'E-mail', 'value' => $filtroEmail]
-            ]
+            ],
+            "action" => "/cliente"
         ];
         
         $topbar = ["btns"=>$btns, 'filtro' => $filtros];
@@ -95,7 +96,8 @@ class ClienteController extends Controller
     {
         return $this->render('Cliente/cadastro.html.twig', [
             'title' => "SAC - Novo Cliente",
-            "menu" => ["current"=>"clientes"]
+            "menu" => ["current"=>"clientes"],
+            "backBtn" => "location.href='/cliente'"
         ]);
     }
     

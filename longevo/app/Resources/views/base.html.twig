@@ -2,13 +2,14 @@
 <html>
     <head>
         <meta charset="UTF-8" />
-        <title>{% block title %}{{ title | default("SAC") }}{% endblock %}</title>
+        <title>{% block title %}{{title|default("SAC")}}{% endblock %}</title>
         <link rel="stylesheet" href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}"/>
         <link rel="stylesheet" href="{{ asset('vendor/bootstrap/css/bootstrap-theme.min.css') }}"/>
+        <link rel="stylesheet" href="{{ asset('css/style.css') }}"/>
         {% block stylesheets %}{% endblock %}
     </head>
     <body>
-    	{% include "Common/menu.superior.component.twig" %}
+    	{% include "Common/menu.superior.component.twig" with {"menu":menu}%}
         {% block body %}
         
         {% endblock %}

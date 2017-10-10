@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-	{% include 'Common/topbar.component.twig' with topBar %}
+	{% include 'Common/topbar.component.twig' with {"filtro":topBar.filtro, "btns":topBar.btns} %}
 	{% include 'Common/relatorio.component.twig' with table %}
 	{% include 'Common/paginador.component.twig' with paginacao %}
 {% endblock %}

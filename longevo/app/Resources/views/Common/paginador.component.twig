@@ -1,23 +1,23 @@
-<div class="container-fluid" style="text-align: center;">
+<div class="container-fluid paginador" style="text-align: center;">
     <nav aria-label="Navegação">
       <ul class="pagination">
-        <li class="{{ (paginaAtual == 1 ? "disabled":"") }}">
+        <li class="{{(paginaAtual==1?"disabled":"")}}">
           <a {% if paginaAtual > 1 %}
-          	onClick="paginador({{ paginaAtual-1 }})"
+          	onClick="paginador({{paginaAtual-1}})"
           	{% endif %} 
           	aria-label="Anterior">
             <span aria-hidden="true">&laquo;</span>
           </a>
         </li>
-        {% for i in 1..nPaginas %}
-        	<li {{ paginaAtual == i ? "class=\"active\"":"" }}>
-        		<a onClick="paginador({{ i }})">{{ i }}</a>
+        {% for i in 1..nPaginas%}
+        	<li {{paginaAtual==i?"class=\"active\"":""}}>
+        		<a onClick="paginador({{i}})">{{i}}</a>
         	</li>
         {% endfor %}
         
-        <li class="{{ (paginaAtual == nPaginas ? "disabled":"") }}">
-          <a {% if paginaAtual < nPaginas %} 
-          	onClick="paginador({{ paginaAtual+1 }})"
+        <li class="{{(paginaAtual==nPaginas?"disabled":"")}}">
+          <a {% if paginaAtual<nPaginas%} 
+          	onClick="paginador({{paginaAtual+1}})"
           	{% endif %} 
           	aria-label="Proxima">
             <span aria-hidden="true">&raquo;</span>
